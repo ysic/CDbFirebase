@@ -1,3 +1,6 @@
+//This code creates a browser platform for dynamic (JIT) compilation and
+//bootstraps the AppModule described above.
+
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
