@@ -25,4 +25,19 @@ describe('NavComponent', () => {
   it('should be created', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render a text in a navbar-brand class', async(() => {
+    const fixture = TestBed.createComponent(NavComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('.navbar-brand').textContent).toContain('CDb');
+  }));
+
+  it('should render a text in a AddConcert class', async(() => {
+    const fixture = TestBed.createComponent(NavComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('.AddConcert').textContent).toContain('Add a concert');
+  }));
+
 });

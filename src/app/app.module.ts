@@ -13,16 +13,19 @@ import { FooterComponent } from './core/footer/footer.component';
 import { NavComponent } from './core/nav/nav.component';
 import { HomeComponent } from './core/home/home.component';
 import { PagenotfoundComponent } from './shared/pagenotfound/pagenotfound.component';
+import { ConcertformComponent } from './core/concertform/concertform.component';
 
 
 const appRoutes: Routes = [
-  //{ path: 'crisis-center', component: CrisisListComponent },
-  //{ path: 'hero/:id',      component: HeroDetailComponent },
+  //{ path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  //{ path: 'hero/:id', component: HeroDetailComponent },
   //{path: 'heroes', component: HeroListComponent, data: { title: 'Heroes List' }},
   //{ path: '', redirectTo: '/heroes', pathMatch: 'full'},
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
-  { path: '**', component: PagenotfoundComponent }
+  { path: 'concert', component: ConcertformComponent },
+  { path: '**', component: PagenotfoundComponent },
+  //{ path: '**', redirectTo: 'home' },
 ];
 
 
@@ -31,7 +34,7 @@ const appRoutes: Routes = [
 @NgModule({
 
   //Specifies a list of directives/pipes that belong to this module. (components)
-  declarations: [AppComponent, FooterComponent, NavComponent, HomeComponent, PagenotfoundComponent],
+  declarations: [AppComponent, FooterComponent, NavComponent, HomeComponent, PagenotfoundComponent, ConcertformComponent],
 
   //Specifies a list of modules whose exported directives/pipes should be
   //available to templates in this module (Modules)
