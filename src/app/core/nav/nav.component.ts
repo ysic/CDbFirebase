@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../../shared/services/auth.service';
+
 
 @Component({
   selector: 'app-nav',
@@ -6,7 +8,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  constructor() { }
+
+  //The constructor itself does nothing. The parameter simultaneously defines a
+  //public authService property and identifies it as a AuthService injection site.
+  constructor(public authService: AuthService) {
+  }
   ngOnInit() {
   }
+
+  loginGoogle(){
+    this.authService.loginGoogle();
+
+  }
+
+  loginFacebook(){
+    this.authService.loginFacebook();
+  }
+
+    logout() {
+      this.authService.logout();
+    }
 }

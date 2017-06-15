@@ -49,8 +49,19 @@
                             <div class="checkbox">
                                 <label><input type="checkbox"> Remember me</label>
                             </div>
-                            <button type="submit" class="btn btn-default" ng-click="SignIn()">Submit</button>
+                            <button type="submit" class="btn btn-default" (click)="xx()">Login</button>
                         </form>
+
+
+                        <div>
+                          <button  (click)="loginFacebook()" *ngIf="!(user | async)?.uid">Facebook</button>
+                          <br>
+                          <button  (click)="loginGoogle()" *ngIf="!(user | async)?.uid">Google</button>
+                          <br>
+                          <button  (click)="logout()" *ngIf="!(user | async)?.uid">logout</button>
+                          <br>
+                        </div>
+
                     </div>
                 </li>
 
