@@ -11,21 +11,23 @@ export class NavComponent implements OnInit {
 
   //The constructor itself does nothing. The parameter simultaneously defines a
   //public authService property and identifies it as a AuthService injection site.
+
+  //When a member is marked private, it cannot be accessed from outside of its containing class
   constructor(public authService: AuthService) {
   }
   ngOnInit() {
   }
 
-  loginGoogle(){
+  //void -> prevent the page from refreshing
+  loginGoogle(): void {
     this.authService.loginGoogle();
-
   }
 
-  loginFacebook(){
+  loginFacebook(): void {
     this.authService.loginFacebook();
   }
 
-    logout() {
+    logout(): void {
       this.authService.logout();
     }
 }

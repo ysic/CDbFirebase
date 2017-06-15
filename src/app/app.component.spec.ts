@@ -1,11 +1,24 @@
-import { Routes } from '@angular/router';
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { APP_BASE_HREF } from '@angular/common';
+
+import { RouterModule, Routes } from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { NavComponent } from './core/nav/nav.component';
 import { HomeComponent } from './core/home/home.component';
+import { ConcertformComponent } from './core/concertform/concertform.component';
+import { ArtistComponent } from './core/artist/artist.component';
+
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuth } from 'angularfire2/auth';
+
+import { environment } from '../environments/environment';
+
+import { AuthService } from './shared/services/auth.service';
+import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,10 +32,18 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         FooterComponent,
+        NavComponent,
         HomeComponent,
-        NavComponent  // declare the test component
+        ConcertformComponent,
+        ArtistComponent,
+        PageNotFoundComponent
       ],
-      imports: [RouterTestingModule.withRoutes(appRoutes)],
+      imports: [
+        BrowserModule,
+        AngularFireModule.initializeApp(environment.firebase),  // imports firebase/app needed for everything
+        RouterModule.forRoot(appRoutes)
+      ],
+      providers: [{provide: APP_BASE_HREF, useValue: '/'}, AngularFireAuth, AuthService]
     }).compileComponents();
   }));
 

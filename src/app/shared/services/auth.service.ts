@@ -14,29 +14,39 @@ export class AuthService {
   user: Observable<firebase.User>;
 
   constructor(public afAuth: AngularFireAuth) {
-
     this.user = afAuth.authState; //allows us to check the authentication state
   }
 
-  // a login method that will be called when a login button is clicked
-  loginGoogle() {
-     this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
-       .catch(function (error){
-       alert('${error.message} Please try again');
-     });
-     console.log(this.afAuth.auth.currentUser.displayName);
-
-   }
-
-   loginFacebook() {
-    this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
-    .catch(function (error){
-      alert('${error.message} Please try again')
-    })
+  loginGoogle(): void {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    this.afAuth.auth.signInWithPopup(provider).then(function(authData) {
+      console.log(authData.credential);
+      console.log(authData.additionalUserInfo.profile);
+    }).catch(function(error) {
+      console.log(error);
+    });
   }
 
-    logout() {
-      this.afAuth.auth.signOut();
-    }
+  loginFacebook(): void {
+    var provider = new firebase.auth.FacebookAuthProvider();
+    this.afAuth.auth.signInWithPopup(provider).then(function(authData) {
+      console.log(authData);
+    }).catch(function(error) {
+      console.log(error);
+    });
+  }
 
+  logout(): void {
+    this.afAuth.auth.signOut().then(function() {
+      console.log("sign-out successful");
+    }, function(error) {
+      console.log(error);
+    });
+  }
+
+  //Create account
+  //firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {console.log(error);});
+
+  //sign in
+  //firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {console.log(error);});
 }
