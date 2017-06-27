@@ -1,25 +1,8 @@
-.content {
+.container {
   padding-top: 70px;
   padding-bottom: 40px;
 }
 
-.my-custom-stars .button .material-icons {
-  font-size: 15px;
-}
-
-.my-custom-stars .star-button.star-on .material-icons {
+h1 {
   color: #e0e006;
-}
-
-h3 {
-  color: #e0e006;
-}
-
-.chart div {
-  font: 10px sans-serif;
-  background-color:  #808080;
-  text-align: right;
-  padding: 0px;
-  margin: 1px;
-  color: #ffffff
 }

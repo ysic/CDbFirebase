@@ -3,8 +3,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-//The Angular Router is an optional service that presents a particular
-//component view for a given URL
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -16,8 +14,11 @@ import { ArtistComponent } from './core/artist/artist.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
 import { environment } from '../environments/environment';
+
 import { AuthService } from './shared/services/auth.service';
 
 const appRoutes: Routes = [
@@ -27,8 +28,6 @@ const appRoutes: Routes = [
   { path: 'artist', component: ArtistComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
-
-
 
 //The @NgModule decorator identifies AppModule as an Angular module class
 @NgModule({
@@ -48,12 +47,14 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),  // imports firebase/app needed for everything
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    AngularFireDatabaseModule, // imports firebase/database, only needed for database features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features
   ],
 
   //Defines the set of injectable objects that are available in the injector of
   //this module. (services)
-  providers: [AuthService, AngularFireAuth],
+  providers: [AuthService],
 
   //the root component that Angular creates and inserts into the index.html
   //host web page.

@@ -27,7 +27,7 @@ export class NavComponent implements OnInit {
     this.authService.loginFacebook();
   }
 
-    logout(): void {
-      this.authService.logout();
+  logout(): void {
+    this.authService.logout();
     }
 }
