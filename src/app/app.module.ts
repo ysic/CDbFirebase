@@ -2,6 +2,7 @@
 //the BrowserModule that this and every application needs to run in a browser.
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule }   from '@angular/forms';
 
 import { RouterModule, Routes } from '@angular/router';
 
@@ -46,6 +47,7 @@ const appRoutes: Routes = [
   //available to templates in this module (Modules)
   imports: [
     BrowserModule,
+    FormsModule,
     AngularFireModule.initializeApp(environment.firebase),  // imports firebase/app needed for everything
     RouterModule.forRoot(appRoutes),
     AngularFireDatabaseModule, // imports firebase/database, only needed for database features
