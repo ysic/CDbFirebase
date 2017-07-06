@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Concert } from '../../shared/models/concert';
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable  } from 'angularfire2/database';
+import { AngularFireDatabase} from 'angularfire2/database';
 
 @Component({
   selector: 'app-concertform',
@@ -29,11 +29,13 @@ export class ConcertformComponent {
 		,"Yemen","Zambia","Zimbabwe"];
 
   //artistId, date, name, place, type, city, country, ratingAvg
-  model = new Concert('', new Date(), '', '', '', '', '', 0);
+  modelConcert = new Concert('', new Date(), '', '', '', '', '', 0);
 
   constructor(private db: AngularFireDatabase) {
   }
 
+  //method
+  //hen we refer to one of the members of the class we prepend this.. This denotes that it’s a member access.
   onSubmit(artistId, date, name, place, type, city, country){
     console.log (artistId, date, name, place, type, city, country);
     const path = '/Artist/' + artistId + '/concerts';

@@ -7,7 +7,7 @@ export class Concert {
     public type: string,
     public city: string,
     public country: string,
-    public ratingAvg: number = 0,
+    public ratingAvg: number,
   ) {}
 
 }
