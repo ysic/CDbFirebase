@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Concert } from '../../shared/models/concert';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable  } from 'angularfire2/database';
 
 @Component({
   selector: 'app-concertform',
@@ -9,11 +9,6 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 })
 
 export class ConcertformComponent {
-
-  items: FirebaseListObservable<any[]>;
-  constructor(db: AngularFireDatabase) {
-    this.items = db.list('/Artist/-JRHTHaIs-jNPLXOQivY/concerts');
-  }
 
   types = ["concert", "festival"];
 
@@ -33,10 +28,15 @@ export class ConcertformComponent {
 		,"Turkey","Turkmenistan","Turks &amp; Caicos","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","United States Minor Outlying Islands","Uruguay","Uzbekistan","Venezuela","Vietnam","Virgin Islands (US)"
 		,"Yemen","Zambia","Zimbabwe"];
 
-    //artistId, date, name, place, type, city, country, ratingAvg
-  model = new Concert('-JRHTHaIs-jNPLXOQivY', new Date('2017-05-13'), 'name of the concert', 'place of the concert', 'concert', 'a city', 'country', 0);
-  onSubmit() {
-    //console.log (model.name);
-    this.items.push({name:"blabla"});
+  //artistId, date, name, place, type, city, country, ratingAvg
+  model = new Concert('', new Date(), '', '', '', '', '', 0);
+
+  constructor(private db: AngularFireDatabase) {
+  }
+
+  onSubmit(artistId, date, name, place, type, city, country){
+    console.log (artistId, date, name, place, type, city, country);
+    const path = '/Artist/' + artistId + '/concerts';
+    return this.db.list(path).push({date:date, name:name, place:place, type:type, city: city, country:country, ratingAvg:0});
   }
 }

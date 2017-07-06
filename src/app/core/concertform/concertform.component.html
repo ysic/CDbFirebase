@@ -6,49 +6,51 @@
 
         <!-- add a new concert in the Database, using a limited number of artists for now -->
         <div class="panel-body">
-            <form class="col-xs-11 col-md-6 col-lg-6" (ngSubmit)="onSubmit()" #concertForm="ngForm">
+            <form class="col-xs-11 col-md-6 col-lg-6" (ngSubmit)="onSubmit(concertIdArtist.value, concertDate.value, concertName.value, concertPlace.value, concertType.value, concertCity.value, concertCountry.value)" #concertForm="ngForm">
 
                 <div class="form-group">
-                    <label for="idArtist" class="mr-sm-2">Artist:</label>
-                    <select name="idArtist" class="form-control" id="idArtist" required>
+                    <label for="concertIdArtist" class="mr-sm-2">Artist:</label>
+                    <select #concertIdArtist class="form-control" required>
                       <option value="">choose an artist</option>
                       <option value="-JRHTHaIs-jNPLXOQivY">Madonna</option>
+                      <option value="-JRHTHaKuITFIhnj02kE">Coldplay</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="date" class="mr-sm-2">Date:</label>
-                    <input type="date" class="form-control" id="date" placeholder="date" required  [(ngModel)]="model.date" name="date" #date="ngModel">
+                    <label for="concertDate" class="mr-sm-2">Date:</label>
+                    <input #concertDate type="date" class="form-control" placeholder="date" required  [(ngModel)]="model.date" name="date" #date="ngModel">
                 </div>
 
                 <div class="form-group">
                     <label for="concertName" class="mr-sm-2">Name of the concert:</label>
-                    <input type="text" class="form-control" id="concertName" placeholder="Name of the concert" required [(ngModel)]="model.name" name="name" #name="ngModel">
+                    <input #concertName type="text" class="form-control"  placeholder="Name of the concert" required [(ngModel)]="model.name" name="name" #name="ngModel">
                     <div [hidden]="name.valid || name.pristine" class="alert alert-danger">A name is required</div>
                 </div>
 
                 <div class="form-group">
                     <label for="concertPlace" class="mr-sm-2">Place of the concert:</label>
-                    <input type="text" class="form-control" id="concertPlace" placeholder="Place of the concert" required [(ngModel)]="model.place" name="place" #place="ngModel">
+                    <input #concertPlace type="text" class="form-control"  placeholder="Place of the concert" required [(ngModel)]="model.place" name="place" #place="ngModel">
                     <div [hidden]="place.valid || place.pristine" class="alert alert-danger">A place is required</div>
                 </div>
 
                 <div class="form-group">
-                    <label for="type" class=" mr-sm-2 ">Type:</label>
-                    <select id="type" class="form-control" required>
+                    <label for="concertType" class=" mr-sm-2 ">Type:</label>
+                    <select #concertType class="form-control" required>
+                      <option value="">choose a type</option>
                       <option *ngFor="let type of types" [value]="type">{{type}}</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="city" class="mr-sm-2">City:</label>
-                    <input type="text" class="form-control" id="city" placeholder="City" required [(ngModel)]="model.city" name="city" #city="ngModel">
+                    <label for="concertCity" class="mr-sm-2">City:</label>
+                    <input #concertCity type="text" class="form-control" placeholder="City" required [(ngModel)]="model.city" name="city" #city="ngModel">
                     <div [hidden]="city.valid || city.pristine" class="alert alert-danger">A city is required</div>
                 </div>
 
                 <div class="form-group">
-                    <label for="country" class="mr-sm-2">Country:</label>
-                    <select id="country" ng-model="country" class="form-control" required>
+                    <label for="concertCountry" class="mr-sm-2">Country:</label>
+                    <select #concertCountry ng-model="country" class="form-control" required>
                       <option *ngFor="let country of countries" [value]="country">{{country}}</option>
                     </select>
                 </div>
