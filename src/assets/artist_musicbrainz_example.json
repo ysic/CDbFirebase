@@ -1,0 +1,25 @@
+{
+  "id": "101060",
+  // musicbrainz identifier
+  "gid": "ca3f3ee1-c4a7-4bac-a16a-0b888a396c6b",
+  "name": "The Silhouettes",
+  "sort_name": "Silhouettes, The",
+  // founded
+  "begin_date_year": "1956",
+  "begin_date_month": "\\N",
+  "begin_date_day": "\\N",
+  //dissolved
+  "end_date_year": "1993",
+  "end_date_month": "\\N",
+  "end_date_day": "\\N",
+  "ended": "2",
+  // type like Group, person, need the type table
+  "type_FK": "222",
+  "gender_FK": "\\N",
+  "area_FK": "US doo wop/R&B group \"Get a Job\"",
+  "begin_area": "0",
+  "end_area": "2014-12-18 05:07:38.77749+00",
+  "comment": "t",
+  "edits_pendings": "7707",
+  "last_updated": "\\N"
+},

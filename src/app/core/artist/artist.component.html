@@ -1,20 +1,18 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-6 col-md-3 col-lg-3">
-      <a href="#" class="thumbnail"><img src="{{ (item | async)?.img }}"></a>
+      <a href="#" class="thumbnail"><img src="{{ (artist | async)?.img }}"></a>
     </div>
     <div class="col-xs-6 col-md-6 col-lg-6">
       <!-- The pipe operator | : Pipes are simple functions that accept an input value and return a transformed value -->
       <!-- The async pipe subscribes to an Observable or Promise and returns the latest value it has emitted.
       When a new value is emitted, the async pipe marks the component to be checked for changes. When the component gets destroyed, the async pipe unsubscribes automatically to avoid potential memory leaks. -->
       <!-- The Angular safe navigation operator (?.) is a fluent and convenient way to guard against null and undefined values in property paths. Here it is, protecting against a view render failure if the currentHero is null. -->
-      <h1>{{ (item | async)?.name }}</h1>
-      <p>{{ (item | async)?.genre }}</p>
+      <h1>{{ (artist | async)?.name }}</h1>
+      <p>{{ (artist | async)?.genre }}</p>
 
       <hr>
-      <p>At vel graeci aliquam, pro gubergren incorrupte id, has et nihil ridens torquatos.
-        Ut quo utamur scripta, vitae alterum accumsan his id, ex case virtute duo.
-        Et nec omnesque principes. Vim labores invidunt te. Sed ea atqui eligendi, evertitur sadipscing
+      <p>At vel graeci aliquam, pro gubergren incorrupte id, has et nihil ridens torquatos. Ut quo utamur scripta, vitae alterum accumsan his id, ex case virtute duo. Et nec omnesque principes. Vim labores invidunt te. Sed ea atqui eligendi, evertitur sadipscing
         comprehensam ut pri, has in prima aliquip.</p>
       <hr>
     </div>
@@ -34,21 +32,33 @@
     <!-- concerts list -->
     <div class="panel-body">
 
-      <div class="row" *ngFor="let item of items | async">
+      <div class="row" *ngFor="let concert of concerts | async; let i = index;">
+
         <div class="col-xs-8 col-md-8 col-lg-8">
-          <h4>{{item.name}} at {{item.place}} <span class="glyphicon glyphicon-star yellow"></span> {{item.ratingAvg}}</h4>
-          <p>{{item.date | date: 'dd MMM yyyy'}}, {{item.city}}, {{item.country}}</p>
-
-          <!-- <div class="row" *ngFor="let concert of item.comments  | async">
-            orderBy:'-date'
-            <ul>
-              <li>{{concert.comment}}, rating: <span class="glyphicon glyphicon-star yellow"></span> {{concert.rating}}<br>
-                <i>{{concert.author}}, {{concert.date}}</i>
-              </li>
-            </ul>
-          </div> -->
-
+          <h4>{{concert.name}} at {{concert.place}} <span class="glyphicon glyphicon-star yellow"></span> {{concert.ratingAvg}}</h4>
+          <p>{{concert.date | date: 'dd MMM yyyy'}}, {{concert.city}}, {{concert.country}}</p>
         </div>
+
+        <div class="col-xs-4 col-md-4 col-lg-4">
+          <button type="button" class="btn btn-info" data-toggle="collapse" [attr.data-target]="'#ratingCollapse' + i">Rate it -></button>
+          <div [id]="'ratingCollapse'+ i" class="collapse" style="padding-bottom: 10px;">
+
+            <form  #commentForm="ngForm" (ngSubmit)="onSubmitComment(concert.$key, comment.value)">
+              <!-- <div class="form-group">
+                <label for="rating">Rating:</label>
+                <jk-rating-stars max-rating="10" rating="ratingStarts" class="my-custom-stars"></jk-rating-stars>
+                <div style="width: 100px">{{ratingStarts}} Stars</div>
+              </div> -->
+              <div class="form-group">
+                <label for="comment">Comment:</label>
+                <input #comment type="comment" class="form-control" placeholder="Enter comment">
+              </div>
+              <button type="submit" class="btn btn-info" data-toggle="collapse" [attr.data-target]="'#ratingCollapse' + i" [disabled]="!commentForm.form.valid">Submit</button>
+            </form>
+
+          </div>
+        </div>
+
       </div>
 
     </div>

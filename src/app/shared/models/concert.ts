@@ -1,3 +1,5 @@
+import {Comments} from './comments';
+
 export class Concert {
   constructor(
     public artistId: string,
@@ -8,6 +10,7 @@ export class Concert {
     public city: string,
     public country: string,
     public ratingAvg: number,
+    public comments: Comments[],
   ) {}
 
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Concert } from '../../shared/models/concert';
-import { AngularFireDatabase} from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
 
 @Component({
   selector: 'app-concertform',
@@ -29,9 +29,11 @@ export class ConcertformComponent {
 		,"Yemen","Zambia","Zimbabwe"];
 
   //artistId, date, name, place, type, city, country, ratingAvg
-  modelConcert = new Concert('', new Date(), '', '', '', '', '', 0);
+  modelConcert = new Concert('', new Date(), '', '', '', '', '', 0, []);
+  artists: FirebaseListObservable<any[]>;
 
   constructor(private db: AngularFireDatabase) {
+    this.artists = db.list('/Artist');
   }
 
   //method
