@@ -1,16 +1,14 @@
-import {Comments} from './comments';
+import { Venue } from './venue';
 
 export class Concert {
   constructor(
-    public artistId: string,
+    public artistID: string,
+    public comments: [{"commentID": boolean}],
     public date: Date,
     public name: string,
-    public place: string,
-    public type: string,
-    public city: string,
-    public country: string,
     public ratingAvg: number,
-    public comments: Comments[],
+    public type: string,
+    public venue: Venue,
+    //public venueID: string
   ) {}
-
 }

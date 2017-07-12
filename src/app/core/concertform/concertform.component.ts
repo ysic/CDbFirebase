@@ -28,8 +28,8 @@ export class ConcertformComponent {
 		,"Turkey","Turkmenistan","Turks &amp; Caicos","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","United States Minor Outlying Islands","Uruguay","Uzbekistan","Venezuela","Vietnam","Virgin Islands (US)"
 		,"Yemen","Zambia","Zimbabwe"];
 
-  //artistId, date, name, place, type, city, country, ratingAvg
-  modelConcert = new Concert('', new Date(), '', '', '', '', '', 0, []);
+
+  //modelConcert = new Concert('', '', new Date(), '', '', 0);
   artists: FirebaseListObservable<any[]>;
 
   constructor(private db: AngularFireDatabase) {
@@ -38,9 +38,9 @@ export class ConcertformComponent {
 
   //method
   //hen we refer to one of the members of the class we prepend this.. This denotes that it’s a member access.
-  onSubmit(artistId, date, name, place, type, city, country){
-    console.log (artistId, date, name, place, type, city, country);
-    const path = '/Artist/' + artistId + '/concerts';
-    return this.db.list(path).push({date:date, name:name, place:place, type:type, city: city, country:country, ratingAvg:0});
+  onSubmit(artistID, venueID, date, name, type, ratingAvg){
+    console.log (artistID, venueID, date, name, type, ratingAvg);
+    const path = '/Artist/' + artistID + '/concerts';
+    return this.db.list(path).push({date:date, name:name, type:type, ratingAvg:0});
   }
 }
