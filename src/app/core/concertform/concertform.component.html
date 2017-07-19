@@ -7,7 +7,7 @@
         <!-- add a new concert in the Database, using a limited number of artists for now -->
         <div class="panel-body">
           <!-- (event) is one-way data direction, from view target to data source -->
-            <form class="col-xs-11 col-md-6 col-lg-6" (ngSubmit)="onSubmit(concertIdArtist.value, concertIdArtist.value, concertDate.value, concertName.value, concertType.value)" #concertForm="ngForm">
+            <form class="col-xs-11 col-md-6 col-lg-6" (ngSubmit)="onSubmit(concertIdArtist.value, concertDate.value, concertName.value, concertType.value)" #concertForm="ngForm">
 
                 <div class="form-group">
                     <label for="concertIdArtist" class="mr-sm-2">Artist:</label>
@@ -20,7 +20,7 @@
                 <div class="form-group">
                     <label for="concertDate" class="mr-sm-2">Date:</label>
                     <!-- [(Event and property)] is 2-way data direction (here for ngModel) -->
-                    <input #concertDate type="date" class="form-control" placeholder="date"
+                    <input #concertDate type="date" class="form-control"
                       required  [(ngModel)]="modelConcert.date" name="date" #date="ngModel">
                 </div>
 
@@ -31,14 +31,9 @@
                     <div [hidden]="name.valid || name.pristine" class="alert alert-danger">A name is required</div>
                 </div>
 
-                <div class="form-group">
-                    <label for="concertPlace" class="mr-sm-2">Place of the concert:</label>
-                    <input #concertPlace type="text" class="form-control"  placeholder="Place of the concert"
-                      required [(ngModel)]="modelConcert.place" name="place" #place="ngModel">
-                    <div [hidden]="place.valid || place.pristine" class="alert alert-danger">A place is required</div>
-                </div>
 
-                <div class="form-group">
+
+                 <div class="form-group">
                     <label for="concertType" class=" mr-sm-2 ">Type:</label>
                     <!-- #concertType is a template reference variable -->
                     <!-- let type is a template input variable -->
@@ -50,18 +45,28 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="concertCity" class="mr-sm-2">City:</label>
-                    <input #concertCity type="text" class="form-control" placeholder="City"
-                      required [(ngModel)]="modelConcert.city" name="city" #city="ngModel">
-                    <div [hidden]="city.valid || city.pristine" class="alert alert-danger">A city is required</div>
-                </div>
-
-                <div class="form-group">
                     <label for="concertCountry" class="mr-sm-2">Country:</label>
                     <select #concertCountry ng-model="country" class="form-control" required>
                       <option *ngFor="let country of countries" [value]="country">{{country}}</option>
                     </select>
                 </div>
+
+                <div class="form-group">
+                   <label for="concertCity" class="mr-sm-2">City:</label>
+                   <input #concertCity type="text" class="form-control" placeholder="City"
+                     required [(ngModel)]="modelConcert.city" name="city" #city="ngModel">
+                   <div [hidden]="city.valid || city.pristine" class="alert alert-danger">A city is required</div>
+               </div>
+
+               <!-- looking for a list of existing name place for this city, if not existe, add a new one -->
+
+                <!-- <div class="form-group">
+                    <label for="concertPlace" class="mr-sm-2">Place of the concert:</label>
+                    <input #concertPlace type="text" class="form-control"  placeholder="Place of the concert"
+                      required [(ngModel)]="modelConcert.place" name="place" #place="ngModel">
+                    <div [hidden]="place.valid || place.pristine" class="alert alert-danger">A place is required</div>
+                </div> -->
+
                 <button type="submit" class="btn btn-default" [disabled]="!concertForm.form.valid">Submit valid</button>
             </form>
         </div>

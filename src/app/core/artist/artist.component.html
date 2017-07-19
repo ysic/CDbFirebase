@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-6 col-md-3 col-lg-3">
-      <a href="#" class="thumbnail"><img src="{{ (artist | async)?.img }}"></a>
+      <a href="#" class="thumbnail"><img src="../assets/img/Coldplay.jpg"></a>
     </div>
     <div class="col-xs-6 col-md-6 col-lg-6">
       <!-- The pipe operator | : Pipes are simple functions that accept an input value and return a transformed value -->
@@ -34,10 +34,10 @@
     <div class="panel-body">
 
       <!-- past concerts -->
-      <div class="row" *ngFor="let concert of arrayPastConcerts">
+      <div class="row" *ngFor="let concert of listConcerts">
         <div class="col-xs-8 col-md-8 col-lg-8">
-          <h4>{{concert.name}} at {{concert.place}} <span class="glyphicon glyphicon-star yellow"></span> {{concert.ratingAvg}}</h4>
-          <p>{{concert.date | date: 'dd MMM yyyy'}}, {{concert.city}}, {{concert.country}}</p>
+          <h4>{{ concert.name }} at bobo <span class="glyphicon glyphicon-star yellow"></span> {{ concert.ratingAvg }}</h4>
+          <p>{{concert.date | date: 'dd MMM yyyy'}}, city, country</p>
           <!-- <div class="row" *ngFor="let comment of concert.comments">
             <ul>
               <li>{{comment.comment}}, rating: <span class="glyphicon glyphicon-star yellow"></span> {{comment.rating}}<br>
@@ -69,10 +69,10 @@
       </div>
 
       <!-- futur concerts -->
-      <div class="row" *ngFor="let concert of arrayFuturConcerts">
+      <div class="row" *ngFor="let concertf of futureConcerts | async">
         <div class="col-xs-8 col-md-8 col-lg-8">
-          <h4>{{concert.name}} at {{concert.place}} <span class="glyphicon glyphicon-star yellow"></span> {{concert.ratingAvg}}</h4>
-          <p>{{concert.date | date: 'dd MMM yyyy'}}, {{concert.city}}, {{concert.country}}</p>
+          <h4>{{ (futureConcert | async)?.name }} at {{ (futureVenue | async)?.place }} <span class="glyphicon glyphicon-star yellow"></span> {{ (futureConcert | async)?.ratingAvg }}</h4>
+          <p>{{(futureConcert | async)?.date | date: 'dd MMM yyyy'}}, {{(futureVenue | async)?.city}}, {{(futureVenue | async)?.country}}</p>
         </div>
       </div>
 

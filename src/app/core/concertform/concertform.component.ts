@@ -28,19 +28,21 @@ export class ConcertformComponent {
 		,"Turkey","Turkmenistan","Turks &amp; Caicos","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","United States Minor Outlying Islands","Uruguay","Uzbekistan","Venezuela","Vietnam","Virgin Islands (US)"
 		,"Yemen","Zambia","Zimbabwe"];
 
-
-  //modelConcert = new Concert('', '', new Date(), '', '', 0);
+  modelConcert = new Concert('', new Date(), '', 0, '', '');
   artists: FirebaseListObservable<any[]>;
+  venues: FirebaseListObservable<any[]>;
 
   constructor(private db: AngularFireDatabase) {
-    this.artists = db.list('/Artist');
+    this.artists = db.list('/artists');
+    this.venues = db.list('/venues');
   }
+
+  // need to check if the concert already existe!!!!!!!
 
   //method
   //hen we refer to one of the members of the class we prepend this.. This denotes that it’s a member access.
-  onSubmit(artistID, venueID, date, name, type, ratingAvg){
-    console.log (artistID, venueID, date, name, type, ratingAvg);
-    const path = '/Artist/' + artistID + '/concerts';
-    return this.db.list(path).push({date:date, name:name, type:type, ratingAvg:0});
+  onSubmit(artistID, date, name, type){
+    console.log (artistID, date, name, type);
+    return this.db.list('/concerts').push({artistID: artistID, name:name, date: date, type: type, ratingAvg:0});
   }
 }

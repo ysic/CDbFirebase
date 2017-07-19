@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Concert } from '../../shared/models/concert';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import * as firebase from "firebase";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/take';
+import { Observable } from 'rxjs/Rx';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-artist',
@@ -11,67 +15,63 @@ import * as firebase from "firebase";
 
 export class ArtistComponent implements OnInit {
   // instance properties
-  futureConcerts: FirebaseListObservable<any[]>;
-  pastConcerts: FirebaseListObservable<any[]>;
+  public futureConcerts: FirebaseListObservable<any[]>;
+  public pastConcerts: FirebaseListObservable<any[]>;
 
-  artist: FirebaseObjectObservable<any[]>;
+  public artist: FirebaseObjectObservable<any[]>;
 
-  arrayPastConcerts: Concert[] = [];
-  arrayFuturConcerts: Concert[] = [];
+  public futureConcert: FirebaseObjectObservable<any[]>;
+  public futureVenue: FirebaseObjectObservable<any[]>;
+  public pastConcert: FirebaseObjectObservable<any[]>;
+  public pastVenue: FirebaseObjectObservable<any[]>;
 
+  public listConcerts: Array<any[]>;
+
+  //When a member is marked private, it cannot be accessed from outside of its containing class
   constructor(private db: AngularFireDatabase) {
     //called first time before the ngOnInit()
 
-    const artistID = "-JRHTHaIs-jNPLXOQivY";
+    // local variable block scoop, imunatable,  1 time initialisation, can't be something else
+    const artistID: string = "44RHTHaIs-jNPLXOQivY";
 
+    // To get the object in realtime, create an object binding as a property of your component or service.
+    // Then in your template, you can use the async pipe to unwrap the binding.
     this.artist = db.object('/artists/' + artistID);
 
-    this.futureConcerts = db.list('/artists/' +artistID + '/futureConcerts', { preserveSnapshot: true});
-    this.futureConcerts.subscribe(snapshotFuturConcerts => {
-        snapshotFuturConcerts.forEach(snapshotFuturConcert => {
-          this.db.object('/concerts/' + snapshotFuturConcert.key, { preserveSnapshot: true}).subscribe(snapshotChildFutur =>{
-            this.arrayFuturConcerts.push(snapshotChildFutur.val());
-            //console.log(this.arrayFuturConcerts);
-          });
+
+    //past 5 concerts
+    this.listConcerts = [];
+    this.pastConcerts = db.list('/artists/' + artistID + '/pastConcerts');
+    this.pastConcerts.subscribe(concerts => {
+      concerts.forEach(concertID => {
+        this.pastConcert = db.object('/concerts/' + concertID.$key);
+        this.pastConcert.subscribe(concertInfo => {
+          this.listConcerts.push(concertInfo);
+          this.pastVenue = db.object('/venues/' + concertInfo["venueID"]);
         });
+      });
     });
 
-    this.pastConcerts = db.list('/artists/' +artistID + '/pastConcerts', { preserveSnapshot: true});
-    this.pastConcerts.subscribe(snapshotPastConcerts => {
-        snapshotPastConcerts.forEach(snapshotPastConcert => {
-          console.log("id past concert: " + snapshotPastConcert.key);
-          this.db.object('/concerts/' + snapshotPastConcert.key, { preserveSnapshot: true}).subscribe(snapshotChildPast =>{
-
-            console.log("id venue for past concert: " + snapshotChildPast.val().venueID);
-
-            this.arrayPastConcerts.push(snapshotChildPast.val());
-            console.log(this.arrayPastConcerts);
-
-            var concert = firebase.database().ref('/concerts/'+ snapshotPastConcert.key).limitToFirst(1);
-            var venues = firebase.database().ref().child('venues');
-
-            concert.on('child_added', snap => {
-              venues.child(snapshotChildPast.val().venueID).once('value', venue => {
-                console.log(venue.val());
-                  this.arrayPastConcerts.push(venue.val());
-              });
-            });
-            
-          });
-
+    // future 5 concerts
+    this.futureConcerts = db.list('/artists/' + artistID + '/futureConcerts');
+    this.futureConcerts.subscribe(concerts => {
+      concerts.forEach(concertID => {
+        this.futureConcert = db.object('/concerts/' + concertID.$key);
+        this.futureConcert.subscribe(concertInfo => {
+          this.futureVenue = db.object('/venues/' + concertInfo["venueID"]);
         });
+      });
     });
 
   }
 
   ngOnInit() {
     //called after the constructor and called  after the first ngOnChanges()
-
   }
 
   //concertId rating comment author date
-  onSubmitComment(concertId, comment){
-    console.log (concertId, comment)
+  onSubmitComment(concertId, comment) {
+    console.log(concertId, comment)
     const artistId = "-JRHTHaIs-jNPLXOQivY";
     //const path = '/artists/' + artistId + '/concerts/' + concertId +'/comments';
     //return this.db.list(path).push({rating:6, comment:comment, date: Date.now()});
