@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 
@@ -9,9 +8,6 @@ import * as firebase from 'firebase/app';
 @Injectable()
 
 export class AuthService {
-
-  //A representation of any set of values over any amount of time.
-  // This the most basic building block of RxJS.
 
   constructor(public afAuth: AngularFireAuth) {
 
@@ -28,10 +24,4 @@ export class AuthService {
     console.log("sign-out successful");
   }
 
-
-  //Create account
-  //firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {console.log(error);});
-
-  //sign in
-  //firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {console.log(error);});
 }

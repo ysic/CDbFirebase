@@ -32,7 +32,9 @@ export class ArtistComponent implements OnInit {
     //called first time before the ngOnInit()
 
     // local variable block scoop, imunatable,  1 time initialisation, can't be something else
-    const artistID: string = "44RHTHaIs-jNPLXOQivY";
+    // 00RHTHaIs-jNPLXOQivY
+    // 44RHTHaIs-jNPLXOQivY
+    const artistID: string = "00RHTHaIs-jNPLXOQivY";
 
     // To get the object in realtime, create an object binding as a property of your component or service.
     // Then in your template, you can use the async pipe to unwrap the binding.

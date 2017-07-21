@@ -24,9 +24,9 @@
 
       <form class="navbar-form navbar-left" ng-controller="artistSearchController" ng-submit="submit()">
         <div class="form-group">
-          <input type="text" placeholder="Search an artist or band" ng-model="search" name="search">
+          <input #searchArtist type="text" placeholder="Search an artist or band" name="search">
         </div>
-        <input type="submit" id="submit" value="Search" class="btn btn-default" />
+        <input type="submit" id="submit" value="Search" class="btn btn-default"  (click)="getSearch(searchArtist.value)" />
       </form>
 
       <ul class="nav navbar-nav navbar-right">

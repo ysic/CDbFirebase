@@ -21,12 +21,15 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 
 import { AuthService } from './shared/services/auth.service';
+import { SearchService } from './shared/services/search.service';
+import { SearchComponent } from './core/search/search.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'concert', component: ConcertformComponent },
   { path: 'artist', component: ArtistComponent },
+  { path: 'search/:query', component: SearchComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 
@@ -40,7 +43,8 @@ const appRoutes: Routes = [
     HomeComponent,
     ConcertformComponent,
     ArtistComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    SearchComponent
   ],
 
   //Specifies a list of modules whose exported directives/pipes should be
@@ -56,7 +60,10 @@ const appRoutes: Routes = [
 
   //Defines the set of injectable objects that are available in the injector of
   //this module. (services)
-  providers: [AuthService],
+  providers: [
+    AuthService,  //auth sevice with AngularFire
+    SearchService  //search an artist service
+  ],
 
   //the root component that Angular creates and inserts into the index.html
   //host web page.

@@ -6,3 +6,7 @@
 h1 {
   color: #e0e006;
 }
+
+.capitalize {
+    text-transform: capitalize;
+}

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../shared/services/auth.service';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Router} from '@angular/router';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class NavComponent implements OnInit {
   //public authService property and identifies it as a AuthService injection site.
 
   //When a member is marked private, it cannot be accessed from outside of its containing class
-  constructor(public authService: AuthService, public afAuth: AngularFireAuth) {
+  constructor(public authService: AuthService, public afAuth: AngularFireAuth, private router: Router) {
     // only triggered on sign-in/out (for old behavior use .idToken)
     // //allows us to check the authentication state
     this.user = afAuth.authState;
@@ -33,16 +34,15 @@ export class NavComponent implements OnInit {
   ngOnInit() {
   }
 
-  //void -> prevent the page from refreshing
   loginGoogle() {
     this.authService.loginGoogle();
   }
 
-  // loginFacebook(): void {
-  //   this.authService.loginFacebook();
-  // }
-
   logout() {
     this.authService.logout();
     }
+
+  getSearch(queryValue){
+     this.router.navigate(['/search/' + queryValue]);
+  }
 }
