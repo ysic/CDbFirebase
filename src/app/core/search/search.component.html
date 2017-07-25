@@ -1,8 +1,8 @@
 <div class="container">
     <h3>Search Result(s):</h3>
     <ul>
-  <li *ngFor="let item of listArtists; let i = index" class="capitalize">
-    {{item.name}}
+  <li *ngFor="let item of listArtists" class="capitalize">
+    <a [routerLink]="['/artist/', item.$key]">{{item.name}}</a>
   </li>
 </ul>
 </div>

@@ -28,7 +28,7 @@ const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'concert', component: ConcertformComponent },
-  { path: 'artist', component: ArtistComponent },
+  { path: 'artist/:artistId', component: ArtistComponent },
   { path: 'search/:query', component: SearchComponent },
   { path: '**', component: PageNotFoundComponent }
 ];

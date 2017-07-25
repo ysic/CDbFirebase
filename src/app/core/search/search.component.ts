@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import 'rxjs/add/operator/switchMap';
 import {SearchService} from '../../shared/services/search.service';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
+import 'rxjs/add/operator/switchMap';
 
 
 @Component({
