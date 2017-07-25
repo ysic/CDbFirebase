@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
+import { Observable } from 'rxjs';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 
 //The @Injectable() decorator tells TypeScript to emit metadata about the service.
@@ -14,7 +15,7 @@ export class SearchService {
 
    }
 
-   search(searchValue) {
+   search(searchValue): Observable<any> {
 
      console.log("search for an artist");
 
@@ -25,12 +26,8 @@ export class SearchService {
          endAt:searchValue.toLowerCase() + '\uf8ff'
        }
      });
-
-     this.searchArtists.subscribe(searchResult =>{
-       console.log(searchResult);
-     });
-
-
+     return this.searchArtists;
    }
+
 
 }

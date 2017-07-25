@@ -2,3 +2,7 @@
   padding-top: 70px;
   padding-bottom: 40px;
 }
+
+.capitalize {
+    text-transform: capitalize;
+}

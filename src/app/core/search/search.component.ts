@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import 'rxjs/add/operator/switchMap';
 import {SearchService} from '../../shared/services/search.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
+
 
 @Component({
   selector: 'app-search',
@@ -9,14 +12,25 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class SearchComponent implements OnInit {
 
-  constructor(public searchService: SearchService, private route: ActivatedRoute,) {
-    let queryValue = this.route.snapshot.paramMap.get('query');
-    console.log(queryValue);
-    this.searchService.search(queryValue);
-    // need a refrech of the page here
+  public artist: FirebaseObjectObservable<any[]>;
+  public listArtists: Array<any[]>;
+
+  constructor(public searchService: SearchService, private route: ActivatedRoute, private db: AngularFireDatabase) {
   }
 
   ngOnInit() {
+    this.route.paramMap
+      .switchMap((params: ParamMap) =>
+        this.searchService.search(params.get('query')))
+      .subscribe(queryListArtists => {
+        this.listArtists = [];
+        queryListArtists.forEach(artistID => {
+          this.artist = this.db.object('/artists/' + artistID.$key);
+          this.artist.subscribe(artistInfo => {
+            this.listArtists.push(artistInfo);
+          });
+        });
+      });
   }
 
 }

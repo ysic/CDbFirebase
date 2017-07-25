@@ -22,11 +22,11 @@
         </li>
       </ul>
 
-      <form class="navbar-form navbar-left" ng-controller="artistSearchController" ng-submit="submit()">
+      <form class="navbar-form navbar-left" (ngSubmit)="getSearch(searchArtist.value);searchArtist.value = null" #searchForm="ngForm">
         <div class="form-group">
-          <input #searchArtist type="text" placeholder="Search an artist or band" name="search">
+          <input #searchArtist type="text" placeholder="Search an artist or band">
         </div>
-        <input type="submit" id="submit" value="Search" class="btn btn-default"  (click)="getSearch(searchArtist.value)" />
+        <input type="submit"  class="btn btn-default" value="Search for an artist" />
       </form>
 
       <ul class="nav navbar-nav navbar-right">

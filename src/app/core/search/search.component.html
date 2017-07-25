@@ -1,3 +1,8 @@
 <div class="container">
-    <h3>searching ....</h3>
+    <h3>Search Result(s):</h3>
+    <ul>
+  <li *ngFor="let item of listArtists; let i = index" class="capitalize">
+    {{item.name}}
+  </li>
+</ul>
 </div>
