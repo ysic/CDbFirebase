@@ -20,22 +20,27 @@ export class ArtistComponent implements OnInit {
   // instance properties
   public futureConcerts: FirebaseListObservable<any[]>;
   public pastConcerts: FirebaseListObservable<any[]>;
+  public listComments: FirebaseListObservable<any[]>;
 
   public artist: FirebaseObjectObservable<any[]>;
+  public comment: FirebaseObjectObservable<any[]>;
 
   public futureConcert: FirebaseObjectObservable<any[]>;
   public futureVenue: FirebaseObjectObservable<any[]>;
+
   public pastConcert: FirebaseObjectObservable<any[]>;
   public pastVenue: FirebaseObjectObservable<any[]>;
 
-  public listConcerts: Array<any[]>;
+  public listPastConcerts: Array<any[]>;
+  public listFutureConcerts: Array<any[]>;
+
 
   //When a member is marked private, it cannot be accessed from outside of its containing class
   constructor(private db: AngularFireDatabase, private route: ActivatedRoute) {
     //called first time before the ngOnInit()
 
     // local variable block scoop, imunatable,  1 time initialisation, can't be something else
-    // 00RHTHaIs-jNPLXOQivY
+
     // 44RHTHaIs-jNPLXOQivY
     const artistId: string = this.route.snapshot.paramMap.get('artistId');
     console.log(artistId);
@@ -46,25 +51,68 @@ export class ArtistComponent implements OnInit {
 
 
     //past 5 concerts
-    this.listConcerts = [];
+    this.listPastConcerts = [];
+
     this.pastConcerts = db.list('/artists/' + artistId + '/pastConcerts');
     this.pastConcerts.subscribe(concerts => {
-      concerts.forEach(concertID => {
-        this.pastConcert = db.object('/concerts/' + concertID.$key);
+
+      concerts.forEach((concertId, concertIndex) => {
+
+        this.pastConcert = db.object('/concerts/' + concertId.$key);
         this.pastConcert.subscribe(concertInfo => {
-          this.listConcerts.push(concertInfo);
-          this.pastVenue = db.object('/venues/' + concertInfo["venueID"]);
+
+          this.listPastConcerts.push(concertInfo);
+          this.listPastConcerts[concertIndex]['comments']=[];
+          //console.log(this.listPastConcerts["0"].comments);
+
+          let pastVenueID = this.listPastConcerts[concertIndex]['venueID'];
+          this.listPastConcerts[concertIndex]['venueID']=[];
+
+          this.pastVenue = db.object('/venues/' + pastVenueID);
+          this.pastVenue.subscribe (venue => {
+
+            this.listPastConcerts[concertIndex]['venueID'].push(venue);
+
+          });
+
+          this.listComments = db.list('/concerts/' + concertId.$key + "/comments");
+          this.listComments.subscribe (comments =>{
+
+            comments.forEach(commentId =>{
+
+              this.comment = db.object('/comments/' + commentId.$key);
+              this.comment.subscribe (commentInfo =>{
+
+                this.listPastConcerts[concertIndex]['comments'].push(commentInfo);
+                //console.log(this.listPastConcerts);
+
+              });
+            });
+          });
         });
       });
     });
 
     // future 5 concerts
+    this.listFutureConcerts = [];
+
     this.futureConcerts = db.list('/artists/' + artistId + '/futureConcerts');
     this.futureConcerts.subscribe(concerts => {
-      concerts.forEach(concertID => {
+
+      concerts.forEach((concertID, concertIndex) => {
+
         this.futureConcert = db.object('/concerts/' + concertID.$key);
         this.futureConcert.subscribe(concertInfo => {
-          this.futureVenue = db.object('/venues/' + concertInfo["venueID"]);
+          this.listFutureConcerts.push(concertInfo);
+          let futureVenueID = this.listFutureConcerts[concertIndex]['venueID'];
+          this.listFutureConcerts[concertIndex]['venueID']=[];
+
+          this.futureVenue = db.object('/venues/' + futureVenueID);
+          this.futureVenue.subscribe (venue => {
+
+            this.listFutureConcerts[concertIndex]['venueID'].push(venue);
+            
+          });
         });
       });
     });

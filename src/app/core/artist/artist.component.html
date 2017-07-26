@@ -31,23 +31,23 @@
     <div class="panel-body">
 
       <!-- past concerts -->
-      <div class="row" *ngFor="let concert of listConcerts">
+      <div class="row" *ngFor="let concert of listPastConcerts;  let i = index">
+
         <div class="col-xs-8 col-md-8 col-lg-8">
-          <h4>{{ concert.name }} at bobo <span class="glyphicon glyphicon-star yellow"></span> {{ concert.ratingAvg }}</h4>
-          <p>{{concert.date | date: 'dd MMM yyyy'}}, city, country</p>
-          <!-- <div class="row" *ngFor="let comment of concert.comments">
+          <h4>{{ concert.name }} at {{concert.venueID[0].place}} <span class="glyphicon glyphicon-star yellow"></span> {{ concert.ratingAvg }}</h4>
+          <p>{{concert.date | date: 'dd MMM yyyy'}}, {{concert.venueID[0].city}}, {{concert.venueID[0].country}}</p>
+          <div class="row" *ngFor="let comment of concert.comments">
             <ul>
               <li>{{comment.comment}}, rating: <span class="glyphicon glyphicon-star yellow"></span> {{comment.rating}}<br>
-                <i>{{comment.author}}, {{comment.date}}</i>
+                <i>{{comment.userID}}, {{comment.date | date: 'dd MMM yyyy'}}</i>
               </li>
             </ul>
-          </div> -->
+          </div>
         </div>
 
         <div class="col-xs-4 col-md-4 col-lg-4">
           <button type="button" class="btn btn-info" data-toggle="collapse" [attr.data-target]="'#ratingCollapse' + i">Rate it -></button>
           <div [id]="'ratingCollapse'+ i" class="collapse" style="padding-bottom: 10px;">
-
             <form #commentForm="ngForm" (ngSubmit)="onSubmitComment(concert.$key, comment.value)">
               <!-- <div class="form-group">
                 <label for="rating">Rating:</label>
@@ -60,20 +60,18 @@
               </div>
               <button type="submit" class="btn btn-info" data-toggle="collapse" [attr.data-target]="'#ratingCollapse' + i" [disabled]="!commentForm.form.valid">Submit</button>
             </form>
-
           </div>
         </div>
+
       </div>
 
       <!-- futur concerts -->
-      <div class="row" *ngFor="let concertf of futureConcerts | async">
+      <div class="row" *ngFor="let concert of listFutureConcerts">
         <div class="col-xs-8 col-md-8 col-lg-8">
-          <h4>{{ (futureConcert | async)?.name }} at {{ (futureVenue | async)?.place }} <span class="glyphicon glyphicon-star yellow"></span> {{ (futureConcert | async)?.ratingAvg }}</h4>
-          <p>{{(futureConcert | async)?.date | date: 'dd MMM yyyy'}}, {{(futureVenue | async)?.city}}, {{(futureVenue | async)?.country}}</p>
+          <h4>{{ concert.name }} at {{concert.venueID[0].place}} <span class="glyphicon glyphicon-star yellow"></span> {{ concert.ratingAvg }}</h4>
+          <p>{{concert.date | date: 'dd MMM yyyy'}}, {{concert.venueID[0].city}}, {{concert.venueID[0].country}}</p>
         </div>
       </div>
 
     </div>
   </div>
-
-</div>
