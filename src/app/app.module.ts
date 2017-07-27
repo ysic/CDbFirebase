@@ -24,6 +24,8 @@ import { AuthService } from './shared/services/auth.service';
 import { SearchService } from './shared/services/search.service';
 import { SearchComponent } from './core/search/search.component';
 
+import { StarRatingModule } from 'angular-star-rating';
+
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
@@ -56,6 +58,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     AngularFireDatabaseModule, // imports firebase/database, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
+    StarRatingModule.forRoot()
   ],
 
   //Defines the set of injectable objects that are available in the injector of
