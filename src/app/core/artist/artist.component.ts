@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Concert } from '../../shared/models/concert';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from "firebase";
 
 import 'rxjs/add/operator/map';
@@ -34,9 +35,12 @@ export class ArtistComponent implements OnInit {
   public listPastConcerts: Array<any[]>;
   public listFutureConcerts: Array<any[]>;
 
+  public user: Observable<firebase.User>;
+
+  public updateConcert;
 
   //When a member is marked private, it cannot be accessed from outside of its containing class
-  constructor(private db: AngularFireDatabase, private route: ActivatedRoute) {
+  constructor(private db: AngularFireDatabase, private route: ActivatedRoute, public afAuth: AngularFireAuth) {
     //called first time before the ngOnInit()
 
     // local variable block scoop, imunatable,  1 time initialisation, can't be something else
@@ -65,7 +69,7 @@ export class ArtistComponent implements OnInit {
           this.listPastConcerts[concertIndex]['comments']=[];
           //console.log(this.listPastConcerts["0"].comments);
 
-          let pastVenueID = this.listPastConcerts[concertIndex]['venueID'];
+          const pastVenueID = this.listPastConcerts[concertIndex]['venueID'];
           this.listPastConcerts[concertIndex]['venueID']=[];
 
           this.pastVenue = db.object('/venues/' + pastVenueID);
@@ -84,7 +88,6 @@ export class ArtistComponent implements OnInit {
               this.comment.subscribe (commentInfo =>{
 
                 this.listPastConcerts[concertIndex]['comments'].push(commentInfo);
-                //console.log(this.listPastConcerts);
 
               });
             });
@@ -104,14 +107,14 @@ export class ArtistComponent implements OnInit {
         this.futureConcert = db.object('/concerts/' + concertID.$key);
         this.futureConcert.subscribe(concertInfo => {
           this.listFutureConcerts.push(concertInfo);
-          let futureVenueID = this.listFutureConcerts[concertIndex]['venueID'];
+          const futureVenueID = this.listFutureConcerts[concertIndex]['venueID'];
           this.listFutureConcerts[concertIndex]['venueID']=[];
 
           this.futureVenue = db.object('/venues/' + futureVenueID);
           this.futureVenue.subscribe (venue => {
 
             this.listFutureConcerts[concertIndex]['venueID'].push(venue);
-            
+
           });
         });
       });
@@ -124,12 +127,25 @@ export class ArtistComponent implements OnInit {
 
   }
 
-  //concertId rating comment author date
   onSubmitComment(concertId, comment) {
-    console.log(concertId, comment)
-    const artistId = "-JRHTHaIs-jNPLXOQivY";
-    //const path = '/artists/' + artistId + '/concerts/' + concertId +'/comments';
-    //return this.db.list(path).push({rating:6, comment:comment, date: Date.now()});
+
+    this.user = this.afAuth.authState;
+    this.user.subscribe(userInfo =>{
+
+      const newCommentId = this.db.list("/comments").push({
+          artistID:this.route.snapshot.paramMap.get('artistId'),
+          comment:comment,
+          concertID: concertId,
+          date: Date.now(),
+          rating:6,
+          userID: userInfo.uid
+      }).key;
+
+      this.updateConcert = this.db.object("/concerts/" + concertId + "/comments");
+      this.updateConcert.update({[newCommentId]: true});
+
+    });
+
   }
 
 }
