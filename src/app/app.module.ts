@@ -22,6 +22,7 @@ import { environment } from '../environments/environment';
 
 import { AuthService } from './shared/services/auth.service';
 import { SearchService } from './shared/services/search.service';
+import { RatingService } from './shared/services/rating.service';
 import { SearchComponent } from './core/search/search.component';
 
 import { StarRatingModule } from 'angular-star-rating';
@@ -65,7 +66,8 @@ const appRoutes: Routes = [
   //this module. (services)
   providers: [
     AuthService,  //auth sevice with AngularFire
-    SearchService  //search an artist service
+    SearchService,  //search an artist service
+    RatingService // rating concerts and artists service
   ],
 
   //the root component that Angular creates and inserts into the index.html

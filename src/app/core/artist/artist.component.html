@@ -34,7 +34,7 @@
       <div class="row" *ngFor="let concert of listPastConcerts;  let i = index">
 
         <div class="col-xs-8 col-md-8 col-lg-8">
-          <h4>{{ concert.name }} at XX <span class="glyphicon glyphicon-star yellow"></span> {{ concert.ratingAvg }}</h4>
+          <h4>{{ concert.name }} at XX <span class="glyphicon glyphicon-star yellow"></span> {{concert.ratings.avgrating}}</h4>
           <p>{{concert.date | date: 'dd MMM yyyy'}}, city, country</p>
           <div class="row" *ngFor="let comment of concert.comments">
             <ul>
@@ -68,12 +68,12 @@
       </div>
 
       <!-- futur concerts -->
-      <div class="row" *ngFor="let concert of listFutureConcerts">
+      <!-- <div class="row" *ngFor="let concert of listFutureConcerts">
         <div class="col-xs-8 col-md-8 col-lg-8">
-          <h4>{{ concert.name }} at place <span class="glyphicon glyphicon-star yellow"></span> {{ concert.ratingAvg }}</h4>
+          <h4>{{ concert.name }} at place</h4>
           <p>{{concert.date | date: 'dd MMM yyyy'}}, city, country</p>
         </div>
-      </div>
+      </div> -->
 
     </div>
   </div>
