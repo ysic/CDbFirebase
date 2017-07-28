@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Concert } from '../../shared/models/concert';
+import {RatingService} from '../../shared/services/rating.service';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from "firebase";
@@ -47,7 +48,8 @@ export class ArtistComponent implements OnInit {
   constructor(
     private db: AngularFireDatabase,
     private route: ActivatedRoute,
-    public afAuth: AngularFireAuth
+    public afAuth: AngularFireAuth,
+    public ratingService: RatingService
   ) {
     //called first time before the ngOnInit()
 
@@ -165,6 +167,8 @@ export class ArtistComponent implements OnInit {
         this.db.object("/concerts/" + concertId + "/ratings").update({ avgrating: Math.round((total/numRatings)*10)/10});
         this.db.object("/concerts/" + concertId + "/comments").update({ [newCommentId]: true });
       });
+
+        this.ratingService.rating(this.route.snapshot.paramMap.get('artistId'));
 
     });
 
