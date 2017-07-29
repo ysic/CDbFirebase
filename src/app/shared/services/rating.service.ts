@@ -25,8 +25,8 @@ export class RatingService {
      this.concertsForOneArtist.take(1).subscribe (concerts =>{
        concerts.forEach (concert =>{
          i++;
-         total = concert["ratings"]["avgrating"] + total;
-         this.db.object("/artists/" + artistId).update({ avgrating: (total/i)});
+         total = concert["ratings"]["ratingAvg"] + total;
+         this.db.object("/artists/" + artistId).update({ ratingAvg: (total/i)});
        });
      });
      return this.concertsForOneArtist;

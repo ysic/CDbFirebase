@@ -28,7 +28,7 @@ export class ConcertformComponent {
 		,"Turkey","Turkmenistan","Turks &amp; Caicos","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","United States Minor Outlying Islands","Uruguay","Uzbekistan","Venezuela","Vietnam","Virgin Islands (US)"
 		,"Yemen","Zambia","Zimbabwe"];
 
-  modelConcert = new Concert('', new Date(), '', 0, '', '');
+  //modelConcert = new Concert('', new Date(), '', 0, '', '');
   artists: FirebaseListObservable<any[]>;
   venues: FirebaseListObservable<any[]>;
 
