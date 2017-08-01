@@ -1,8 +1,8 @@
 export class Artist {
   constructor(
-    public discogsID: string,
+    public id: string,
     public name: string,
-    public realName: string,
+    public realname: string,
     public profile: string
 
     //from discogd API

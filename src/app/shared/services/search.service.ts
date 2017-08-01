@@ -22,8 +22,8 @@ export class SearchService {
      this.searchArtists = this.db.list('/artists', {
        query: {
          orderByChild: 'name',
-         startAt: searchValue.toLowerCase(),
-         endAt:searchValue.toLowerCase() + '\uf8ff'
+         startAt: searchValue, //.toLowerCase()
+         endAt:searchValue + '\uf8ff'
        }
      });
      return this.searchArtists;

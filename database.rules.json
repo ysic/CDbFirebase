@@ -7,3 +7,10 @@
     }
   }
 }
+
+{
+  "rules": {
+    ".read": true,
+    ".write":  "auth.uid == '7yTB9NX2ZaXhpplRMC7JQo8gNmE3' ",
+  }
+}

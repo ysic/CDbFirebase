@@ -4,6 +4,7 @@ import {RatingService} from '../../shared/services/rating.service';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from "firebase";
+import {Http} from '@angular/http';
 
 import 'rxjs/add/operator/map';
 
@@ -39,6 +40,7 @@ export class ArtistComponent implements OnInit {
 
   public listPastConcerts: Array<any[]>;
   public listFutureConcerts: Array<any[]>;
+  public discoDgData: Array<any[]>;
 
   public user: Observable<firebase.User>;
 
@@ -49,18 +51,38 @@ export class ArtistComponent implements OnInit {
     private db: AngularFireDatabase,
     private route: ActivatedRoute,
     public afAuth: AngularFireAuth,
-    public ratingService: RatingService
+    public ratingService: RatingService,
+    public http:Http
   ) {
     //called first time before the ngOnInit()
 
     // local variable block scoop, imunatable,  1 time initialisation, can't be something else
 
+    //-KqOq9NrEvzw_RK2LlMH Arcade Fire
+    //https://api.discogs.com/artists/281232
+    //http://musicbrainz.org/ws/2/artist/52074ba6-e495-4ef3-9bb4-0703888a9f68?inc=aliases&fmt=json
+    //https://en.wikipedia.org/w/api.php?action=query&titles=Arcade%20Fire&prop=revisions&rvprop=content&format=json
+
     const artistId: string = this.route.snapshot.paramMap.get('artistId');
     console.log(artistId);
+
+
 
     // To get the object in realtime, create an object binding as a property of your component or service.
     // Then in your template, you can use the async pipe to unwrap the binding.
     this.artist = db.object('/artists/' + artistId);
+    // this.artist.take(1).subscribe(artistInfo => {
+    //   if (!artistInfo.nameVariations) {
+    //
+    //   }
+    //   console.log(artistInfo.id);
+    //   const url = 'https://api.discogs.com/artists/' + artistInfo.id;
+    //   http.get(url).subscribe(res =>{
+    //     this.discoDgData = [];
+    //     this.discoDgData.push(JSON.parse(res['_body']));
+    //     console.log(this.discoDgData["0"]);
+    //   });
+    // });
 
 
     //past 5 concerts

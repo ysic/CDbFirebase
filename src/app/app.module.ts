@@ -3,6 +3,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
+import { HttpModule }    from '@angular/http';
 
 import { RouterModule, Routes } from '@angular/router';
 
@@ -59,7 +60,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     AngularFireDatabaseModule, // imports firebase/database, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
-    StarRatingModule.forRoot()
+    StarRatingModule.forRoot(),
+    HttpModule
   ],
 
   //Defines the set of injectable objects that are available in the injector of
