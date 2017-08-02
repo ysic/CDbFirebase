@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { NavComponent } from './core/nav/nav.component';
 import { HomeComponent } from './core/home/home.component';
-import { ConcertformComponent } from './core/concertform/concertform.component';
+import { ConcertFormComponent } from './core/concert/concert-form.component';
 import { ArtistComponent } from './core/artist/artist.component';
 
 import { AngularFireModule } from 'angularfire2';
@@ -34,7 +34,7 @@ describe('AppComponent', () => {
         FooterComponent,
         NavComponent,
         HomeComponent,
-        ConcertformComponent,
+        ConcertFormComponent,
         ArtistComponent,
         PageNotFoundComponent
       ],

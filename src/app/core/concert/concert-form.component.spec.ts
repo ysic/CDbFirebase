@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ConcertformComponent } from './concertform.component';
+import { ConcertFormComponent } from './concert-form.component';
 
 describe('ConcertformComponent', () => {
-  let component: ConcertformComponent;
-  let fixture: ComponentFixture<ConcertformComponent>;
+  let component: ConcertFormComponent;
+  let fixture: ComponentFixture<ConcertFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConcertformComponent ]
+      declarations: [ ConcertFormComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ConcertformComponent);
+    fixture = TestBed.createComponent(ConcertFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -24,7 +24,7 @@ describe('ConcertformComponent', () => {
   });
 
   it('should render a text in a h3 tag title', async(() => {
-    const fixture = TestBed.createComponent(ConcertformComponent);
+    const fixture = TestBed.createComponent(ConcertFormComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('h3').textContent).toContain('Add a new concert');

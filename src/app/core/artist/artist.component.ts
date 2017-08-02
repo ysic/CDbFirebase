@@ -160,7 +160,7 @@ export class ArtistComponent implements OnInit {
         this.db.object("/users/" + userInfo.uid + "/comments").update({ [newCommentId]: true });
       });
 
-        this.ratingService.rating(this.route.snapshot.paramMap.get('artistId'));
+        this.ratingService.ratingArtist(this.route.snapshot.paramMap.get('artistId'));
 
     });
 

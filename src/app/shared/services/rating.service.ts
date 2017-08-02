@@ -13,7 +13,7 @@ export class RatingService {
 
    }
 
-   rating(artistId): Observable<any> {
+   ratingArtist(artistId): Observable<any> {
      let i=0;
      let total=0;
      this.concertsForOneArtist = this.db.list('/concerts', {

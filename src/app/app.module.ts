@@ -11,7 +11,8 @@ import { AppComponent } from './app.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { NavComponent } from './core/nav/nav.component';
 import { HomeComponent } from './core/home/home.component';
-import { ConcertformComponent } from './core/concertform/concertform.component';
+import { LoginComponent } from './core/login/login.component';
+import { ConcertFormComponent } from './core/concert/concert-form.component';
 import { ArtistComponent } from './core/artist/artist.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 
@@ -27,11 +28,15 @@ import { RatingService } from './shared/services/rating.service';
 import { SearchComponent } from './core/search/search.component';
 
 import { StarRatingModule } from 'angular-star-rating';
+import { ProfileComponent } from './user/profile/profile.component';
+
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'concert', component: ConcertformComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'user/:userId/profile', component: ProfileComponent },
+  { path: 'concertForm', component: ConcertFormComponent },
   { path: 'artist/:artistId', component: ArtistComponent },
   { path: 'search/:query', component: SearchComponent },
   { path: '**', component: PageNotFoundComponent }
@@ -45,10 +50,12 @@ const appRoutes: Routes = [
     FooterComponent,
     NavComponent,
     HomeComponent,
-    ConcertformComponent,
+    ConcertFormComponent,
     ArtistComponent,
     PageNotFoundComponent,
-    SearchComponent
+    SearchComponent,
+    LoginComponent,
+    ProfileComponent
   ],
 
   //Specifies a list of modules whose exported directives/pipes should be

@@ -3,12 +3,12 @@ import { Concert } from '../../shared/models/concert';
 import { AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
 
 @Component({
-  selector: 'app-concertform',
-  templateUrl: './concertform.component.html',
-  styleUrls: ['./concertform.component.css']
+  selector: 'app-concert-form',
+  templateUrl: './concert-form.component.html',
+  styleUrls: ['./concert-form.component.css']
 })
 
-export class ConcertformComponent {
+export class ConcertFormComponent {
 
   types = ["concert", "festival"];
 
