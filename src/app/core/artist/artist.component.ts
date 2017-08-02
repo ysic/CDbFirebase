@@ -25,21 +25,16 @@ import { ActivatedRoute} from '@angular/router';
 
 export class ArtistComponent implements OnInit {
   // instance properties
-  public futureConcerts: FirebaseListObservable<any[]>;
-  public pastConcerts: FirebaseListObservable<any[]>;
-  public listComments: FirebaseListObservable<any[]>;
+  public concerts: FirebaseListObservable<any[]>;
+  public comments: FirebaseListObservable<any[]>;
 
   public artist: FirebaseObjectObservable<any[]>;
   public comment: FirebaseObjectObservable<any[]>;
 
-  public futureConcert: FirebaseObjectObservable<any[]>;
-  public futureVenue: FirebaseObjectObservable<any[]>;
+  public concert: FirebaseObjectObservable<any[]>;
+  public venue: FirebaseObjectObservable<any[]>;
 
-  public pastConcert: FirebaseObjectObservable<any[]>;
-  public pastVenue: FirebaseObjectObservable<any[]>;
-
-  public listPastConcerts: Array<any[]>;
-  public listFutureConcerts: Array<any[]>;
+  public listConcerts: Array<any[]>;
   public discoDgData: Array<any[]>;
 
   public user: Observable<firebase.User>;
@@ -65,12 +60,8 @@ export class ArtistComponent implements OnInit {
 
     const artistId: string = this.route.snapshot.paramMap.get('artistId');
     console.log(artistId);
-
-
-
-    // To get the object in realtime, create an object binding as a property of your component or service.
-    // Then in your template, you can use the async pipe to unwrap the binding.
     this.artist = db.object('/artists/' + artistId);
+
     // this.artist.take(1).subscribe(artistInfo => {
     //   if (!artistInfo.nameVariations) {
     //
@@ -85,40 +76,39 @@ export class ArtistComponent implements OnInit {
     // });
 
 
-    //past 5 concerts
-    this.listPastConcerts = [];
+    this.listConcerts = [];
 
-    this.pastConcerts = db.list('/artists/' + artistId + '/pastconcerts');
-    this.pastConcerts.take(1).subscribe(concerts => {
+    this.concerts = db.list('/artists/' + artistId + '/concerts');
+    this.concerts.take(1).subscribe(concerts => {
 
       concerts.forEach((concertId, concertIndex) => {
 
-        this.pastConcert = db.object('/concerts/' + concertId.$key);
-        this.pastConcert.take(1).subscribe(concertInfo => {
+        this.concert = db.object('/concerts/' + concertId.$key);
+        this.concert.take(1).subscribe(concertInfo => {
 
-          this.listPastConcerts.push(concertInfo);
-          this.listPastConcerts[concertIndex]['comments'] = [];
+          this.listConcerts.push(concertInfo);
+          this.listConcerts[concertIndex]['comments'] = [];
           //console.log(this.listPastConcerts["0"].comments);
 
-          const pastVenueID = this.listPastConcerts[concertIndex]['venueID'];
-          this.listPastConcerts[concertIndex]['venueID'] = [];
+          const pastVenueID = this.listConcerts[concertIndex]['venueID'];
+          this.listConcerts[concertIndex]['venueID'] = [];
 
-          this.pastVenue = db.object('/venues/' + pastVenueID);
-          this.pastVenue.take(1).subscribe(venue => {
+          this.venue = db.object('/venues/' + pastVenueID);
+          this.venue.take(1).subscribe(venue => {
 
-            this.listPastConcerts[concertIndex]['venueID'].push(venue);
+            this.listConcerts[concertIndex]['venueID'].push(venue);
 
           });
 
-          this.listComments = db.list('/concerts/' + concertId.$key + "/comments");
-          this.listComments.take(1).subscribe(comments => {
+          this.comments = db.list('/concerts/' + concertId.$key + "/comments");
+          this.comments.take(1).subscribe(comments => {
 
             comments.forEach(commentId => {
 
               this.comment = db.object('/comments/' + commentId.$key);
               this.comment.take(1).subscribe(commentInfo => {
 
-                this.listPastConcerts[concertIndex]['comments'].push(commentInfo);
+                this.listConcerts[concertIndex]['comments'].push(commentInfo);
 
               });
             });
@@ -126,29 +116,6 @@ export class ArtistComponent implements OnInit {
         });
       });
     });
-
-    // future 5 concerts
-    // this.listFutureConcerts = [];
-    //
-    // this.futureConcerts = db.list('/artists/' + artistId + '/futureconcerts');
-    // this.futureConcerts.take(1).subscribe(concerts => {
-    //
-    //   concerts.forEach((concertID, concertIndex) => {
-    //
-    //     this.futureConcert = db.object('/concerts/' + concertID.$key);
-    //     this.futureConcert.take(1).subscribe(concertInfo => {
-    //       this.listFutureConcerts.push(concertInfo);
-    //       const futureVenueID = this.listFutureConcerts[concertIndex]['venueID'];
-    //       this.listFutureConcerts[concertIndex]['venueID'] = [];
-    //
-    //       this.futureVenue = db.object('/venues/' + futureVenueID);
-    //       this.futureVenue.take(1).subscribe(venue => {
-    //
-    //         this.listFutureConcerts[concertIndex]['venueID'].push(venue);
-    //       });
-    //     });
-    //   });
-    // });
 
   }
 
@@ -158,6 +125,7 @@ export class ArtistComponent implements OnInit {
   }
 
   onSubmitComment(concertId, comment, rating) {
+    console.log("concert ID: " + concertId);
     this.user = this.afAuth.authState;
     this.user.subscribe(userInfo => {
       const newCommentId = this.db.list("/comments").push({
@@ -171,6 +139,7 @@ export class ArtistComponent implements OnInit {
 
 
       // calculation of the avrage rating for the concert. Need in the future a weighted rating
+      // need to creat the rating before the calculation if they are not existing
       this.concertRatings = this.db.object("/concerts/" + concertId + "/ratings");
       this.concertRatings.take(1).subscribe(ratings =>{
         const ratingValue = ratings[rating] + 1;
@@ -188,6 +157,7 @@ export class ArtistComponent implements OnInit {
         this.db.object("/concerts/" + concertId + "/ratings").update({ ratingNum: numRatings});
         this.db.object("/concerts/" + concertId + "/ratings").update({ ratingAvg: Math.round((total/numRatings)*10)/10});
         this.db.object("/concerts/" + concertId + "/comments").update({ [newCommentId]: true });
+        this.db.object("/users/" + userInfo.uid + "/comments").update({ [newCommentId]: true });
       });
 
         this.ratingService.rating(this.route.snapshot.paramMap.get('artistId'));

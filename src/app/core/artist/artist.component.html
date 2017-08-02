@@ -8,7 +8,7 @@
       <!-- The async pipe subscribes to an Observable or Promise and returns the latest value it has emitted.
       When a new value is emitted, the async pipe marks the component to be checked for changes. When the component gets destroyed, the async pipe unsubscribes automatically to avoid potential memory leaks. -->
       <!-- The Angular safe navigation operator (?.) is a fluent and convenient way to guard against null and undefined values in property paths. Here it is, protecting against a view render failure if the currentHero is null. -->
-      <h1 class="capitalize">{{ (artist | async)?.name }} <span class="glyphicon glyphicon-star yellow"></span> {{ (artist | async)?.avgrating }}</h1>
+      <h1 class="capitalize">{{ (artist | async)?.name }} <span class="glyphicon glyphicon-star yellow"></span> {{ (artist | async)?.ratingAvg }}</h1>
       <p>{{ (artist | async)?.realname }}</p>
       <p>DiscoGS ID: {{ (artist | async)?.id }}</p>
       <hr>
@@ -30,11 +30,11 @@
 
     <div class="panel-body">
 
-      <!-- past concerts {{concert.venueID[0].place}} -->
-      <div class="row" *ngFor="let concert of listPastConcerts;  let i = index">
+      <!-- list concerts {{concert.venueID[0].place}} -->
+      <div class="row" *ngFor="let concert of listConcerts;  let i = index">
 
         <div class="col-xs-8 col-md-8 col-lg-8">
-          <h4>{{ concert.name }} at XX <span class="glyphicon glyphicon-star yellow"></span> {{concert.ratings.ratingAvg}}</h4>
+          <h4>{{concert.$key}} {{ concert.name }} at XX <span class="glyphicon glyphicon-star yellow"></span> {{concert.ratings.ratingAvg}}</h4>
           <p>{{concert.date | date: 'dd MMM yyyy'}}, city, country</p>
           <div class="row" *ngFor="let comment of concert.comments">
             <ul>
@@ -66,14 +66,6 @@
         </div>
 
       </div>
-
-      <!-- futur concerts -->
-      <!-- <div class="row" *ngFor="let concert of listFutureConcerts">
-        <div class="col-xs-8 col-md-8 col-lg-8">
-          <h4>{{ concert.name }} at place</h4>
-          <p>{{concert.date | date: 'dd MMM yyyy'}}, city, country</p>
-        </div>
-      </div> -->
 
     </div>
   </div>
