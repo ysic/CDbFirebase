@@ -1,6 +1,11 @@
 # CDbFirebase
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.1.1.
+CDBFirebase is my personal working project. CDb (Concerts database) is an online database of information related to concerts and music performances. I am using Firebase for the Realtime Database and the Authentication. The project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.1.1.
+
+I am using AngularFire2 for the observable and synchronize database collections as objects and lists.
+
+You will find the live working progress here: https://cdbfirebase-b0a9e.firebaseapp.com/
+
 
 ## Development server
 
