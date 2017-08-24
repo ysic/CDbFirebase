@@ -127,42 +127,42 @@ export class ArtistComponent implements OnInit {
   onSubmitComment(concertId, comment, rating) {
     console.log("concert ID: " + concertId);
     this.user = this.afAuth.authState;
-    this.user.subscribe(userInfo => {
-      const newCommentId = this.db.list("/comments").push({
-        artistID: this.route.snapshot.paramMap.get('artistId'),
-        comment: comment,
-        concertID: concertId,
-        date: Date.now(),
-        rating: rating,
-        userID: userInfo.uid
-      }).key;
-
-
-      // calculation of the avrage rating for the concert. Need in the future a weighted rating
-      // need to creat the rating before the calculation if they are not existing
-      this.concertRatings = this.db.object("/concerts/" + concertId + "/ratings");
-      this.concertRatings.take(1).subscribe(ratings =>{
-        const ratingValue = ratings[rating] + 1;
-        const numRatings = ratings["ratingNum"] + 1;
-        const ratingsArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        let total = 0;
-        for (let item of ratingsArray) {
-          if (item == rating) {
-            total = (item * ratingValue) + total;
-          } else {
-            total = (item *  ratings[item]) + total;
-          }
-        }
-        this.db.object("/concerts/" + concertId + "/ratings").update({ [rating]: ratingValue});
-        this.db.object("/concerts/" + concertId + "/ratings").update({ ratingNum: numRatings});
-        this.db.object("/concerts/" + concertId + "/ratings").update({ ratingAvg: Math.round((total/numRatings)*10)/10});
-        this.db.object("/concerts/" + concertId + "/comments").update({ [newCommentId]: true });
-        this.db.object("/users/" + userInfo.uid + "/comments").update({ [newCommentId]: true });
-      });
-
-        this.ratingService.ratingArtist(this.route.snapshot.paramMap.get('artistId'));
-
-    });
+    this.user.subscribe(infouser =>{
+      console.log(infouser);
+    })
+    // this.user.subscribe(userInfo => {
+    //   const newCommentId = this.db.list("/comments").push({
+    //     artistID: this.route.snapshot.paramMap.get('artistId'),
+    //     comment: comment,
+    //     concertID: concertId,
+    //     date: Date.now(),
+    //     rating: rating,
+    //     userID: userInfo.uid
+    //   }).key;
+    //
+    //   // calculation of the avrage rating for the concert. Need in the future a weighted rating
+    //   // need to creat the rating before the calculation if they are not existing
+    //   this.concertRatings = this.db.object("/concerts/" + concertId + "/ratings");
+    //   this.concertRatings.take(1).subscribe(ratings =>{
+    //     const ratingValue = ratings[rating] + 1;
+    //     const numRatings = ratings["ratingNum"] + 1;
+    //     const ratingsArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    //     let total = 0;
+    //     for (let item of ratingsArray) {
+    //       if (item == rating) {
+    //         total = (item * ratingValue) + total;
+    //       } else {
+    //         total = (item *  ratings[item]) + total;
+    //       }
+    //     }
+    //     this.db.object("/concerts/" + concertId + "/ratings").update({ [rating]: ratingValue});
+    //     this.db.object("/concerts/" + concertId + "/ratings").update({ ratingNum: numRatings});
+    //     this.db.object("/concerts/" + concertId + "/ratings").update({ ratingAvg: Math.round((total/numRatings)*10)/10});
+    //     this.db.object("/concerts/" + concertId + "/comments").update({ [newCommentId]: true });
+    //     this.db.object("/users/" + userInfo.uid + "/comments").update({ [newCommentId]: true });
+    //   });
+    //     this.ratingService.ratingArtist(this.route.snapshot.paramMap.get('artistId'));
+    // });
 
   }
 

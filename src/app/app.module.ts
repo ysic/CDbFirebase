@@ -7,6 +7,8 @@ import { HttpModule }    from '@angular/http';
 
 import { RouterModule, Routes } from '@angular/router';
 
+import { LeafletModule } from '@asymmetrik/angular2-leaflet';
+
 import { AppComponent } from './app.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { NavComponent } from './core/nav/nav.component';
@@ -29,6 +31,7 @@ import { SearchComponent } from './core/search/search.component';
 
 import { StarRatingModule } from 'angular-star-rating';
 import { ProfileComponent } from './user/profile/profile.component';
+import { MapFestivalsComponent } from './core/map/map-festivals/map-festivals.component';
 
 
 const appRoutes: Routes = [
@@ -36,6 +39,7 @@ const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'user/:userId/profile', component: ProfileComponent },
+  { path: 'mapFestivals', component: MapFestivalsComponent },
   { path: 'concertForm', component: ConcertFormComponent },
   { path: 'artist/:artistId', component: ArtistComponent },
   { path: 'search/:query', component: SearchComponent },
@@ -55,7 +59,8 @@ const appRoutes: Routes = [
     PageNotFoundComponent,
     SearchComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    MapFestivalsComponent
   ],
 
   //Specifies a list of modules whose exported directives/pipes should be
@@ -68,7 +73,8 @@ const appRoutes: Routes = [
     AngularFireDatabaseModule, // imports firebase/database, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     StarRatingModule.forRoot(),
-    HttpModule
+    HttpModule,
+    LeafletModule.forRoot()
   ],
 
   //Defines the set of injectable objects that are available in the injector of
